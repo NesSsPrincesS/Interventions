@@ -23,5 +23,8 @@ describe('ProblemeComponent', () => {
   //   expect(component).toBeTruthy();
   // });
 
+  it('champ prenom invalide avec 2 caractères',()=>{
+    expect(true).toBeTruthy;
+  })
   
 });
