@@ -39,4 +39,11 @@ describe('ProblemeComponent', () => {
     errors = zone.errors || {};
     expect(errors['minlength']).toBeFalsy();
   })
+  it('champ prenom valide avec 200 caractères',()=>{
+    let errors = {};
+    let zone = component.problemeForm.controls['prenom'];
+    zone.setValue('a'.repeat(200));
+    errors = zone.errors || {};
+    expect(errors['minlength']).toBeFalsy();
+  })
 });
