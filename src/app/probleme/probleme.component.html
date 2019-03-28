@@ -18,8 +18,24 @@
                   id="prenomId"
                   type="text"
                   placeholder="Votre prénom ici (obligatoire)"
-                  formControlName="prenom"/>
-              </div>
+                  formControlName="prenom"
+                  [ngClass]="{'is-valid': (problemeForm.get('prenom').touched ||
+                  problemeForm.get('prenom').dirty) &&
+                  (problemeForm.get('prenom').valid),
+                  'is-invalid': (problemeForm.get('prenom').touched ||
+                  problemeForm.get('prenom').dirty) &&
+                  (!problemeForm.get('prenom').valid )}"
+                  />
+            <span *ngIf="(problemeForm.get('prenom').touched || 
+                          problemeForm.get('prenom').dirty) && 
+                          problemeForm.get('prenom').errors"> 
+              <span *ngIf="problemeForm.get('prenom').errors.minlength">
+                <small class="text-muted">
+                  Indiquer au moins 3 caractères.
+                </small>
+              </span>
+            </span>
+              </div> 
             </div>
           </form>
     </div>
