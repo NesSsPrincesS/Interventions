@@ -1,12 +1,31 @@
+<br/>
+<div class='container'>
 <div class="card">
   <div class="card-header text-white bg-secondary">
     Déclarer un problème
   </div>
   <div class="card-body">
     <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+    <div class="card-text">
+        <form class="form-horizontal"
+          novalidate
+          (ngSubmit)="save()"
+          [formGroup]="problemeForm">
+            <div class="form-group row">
+              <label for="prenomId" class="col-md-2 col-form-label text-right">Prenom:</label>
+              <div class="col-sm-10">
+                <input class="form-control"
+                  id="prenomId"
+                  type="text"
+                  placeholder="Votre prénom ici (obligatoire)"
+                  formControlName="prenom"/>
+              </div>
+            </div>
+          </form>
+    </div>
   </div>
-  <div class="card-footer">
+  <div class="card-footer">  
     <a href="#" class="btn btn-primary"><i class="fa fa-save"></i> Sauvegarder</a>
   </div>
+</div>
 </div>
