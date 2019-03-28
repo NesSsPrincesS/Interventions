@@ -60,4 +60,11 @@ describe('ProblemeComponent', () => {
     errors = zone.errors || {};
     expect(errors['minlength']).toBeFalsy();
   })
+  it('champ prenom valide avec 2 espaces et 1 caractère',()=>{
+    let errors = {};
+    let zone = component.problemeForm.controls['prenom'];
+    zone.setValue(' '.repeat(2) + 'a'.repeat(1));
+    errors = zone.errors || {};
+    expect(errors['minlength']).toBeFalsy();
+  })
 });
