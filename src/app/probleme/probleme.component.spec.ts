@@ -46,4 +46,11 @@ describe('ProblemeComponent', () => {
     errors = zone.errors || {};
     expect(errors['minlength']).toBeFalsy();
   })
+  it('champ prenom invalide avec aucun caractère',()=>{
+    let errors = {};
+    let zone = component.problemeForm.controls['prenom'];
+    zone.setValue('a'.repeat(0));
+    errors = zone.errors || {};
+    expect(errors['required']).toBeTruthy;
+  })
 });
