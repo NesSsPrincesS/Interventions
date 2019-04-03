@@ -7,6 +7,9 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 import { ProblemeComponent } from './probleme/probleme.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { ProblemeData } from './probleme/probleme-data';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     AngularFontAwesomeModule,
-    ReactiveFormsModule    
+    ReactiveFormsModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule .forRoot(ProblemeData, { delay: 1000})    
   ],
   providers: [],
   bootstrap: [AppComponent]

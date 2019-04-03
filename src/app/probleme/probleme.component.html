@@ -5,7 +5,7 @@
     Déclarer un problème
   </div>
   <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
+    <h5 class="card-title">Veuillez renseigner les zones suivante et soumettre votre demande</h5>
     <div class="card-text">
         <form class="form-horizontal"
           novalidate
@@ -35,7 +35,47 @@
                 </small>
               </span>
             </span>
-              </div> 
+              </div>
+              <label for="nomId" class="col-md-2 col-form-label text-right">Nom:</label>
+              <div class="col-sm-10">
+              <input class="form-control"
+                  id="nomId"
+                  type="text"
+                  placeholder="Votre nom ici (obligatoire)"
+                  formControlName="nom"
+                  [ngClass]="{'is-valid': (problemeForm.get('nom').touched ||
+                  problemeForm.get('nom').dirty) &&
+                  (problemeForm.get('nom').valid),
+                  'is-invalid': (problemeForm.get('nom').touched ||
+                  problemeForm.get('nom').dirty) &&
+                  (!problemeForm.get('nom').valid )}"
+                  />
+              </div>
+              <label for="typesProblemeId" class="col-md-2 col-form-label text-right">Types de problème :</label>
+              <div class="col-sm-10">
+                <select class="form-control"
+                id="typesProblemeId"
+                formControlName="typeProbleme"
+                [ngClass]="{'is-valid': (problemeForm.get('typeProbleme').touched ||
+                  problemeForm.get('typeProbleme').dirty) &&
+                  (problemeForm.get('typeProbleme').valid),
+                  'is-invalid': (problemeForm.get('typeProbleme').touched ||
+                  problemeForm.get('typeProbleme').dirty) &&
+                  (!problemeForm.get('typeProbleme').valid )}">
+                  <span *ngIf="(problemeForm.get('typeProbleme').touched || 
+                  problemeForm.get('typeProbleme').dirty) && 
+                  problemeForm.get('typeProbleme').errors"> 
+                   <span *ngIf="problemeForm.get('typeProbleme').errors.required">
+                     <small class="text-muted">
+                      Merci de sélectionner un type de problème.
+                      </small>
+                    </span>
+                   </span>
+                <option value="">Sélectionner un type de problème</option>
+                <option *ngFor = "let prob of typeProbleme" [value]="prob.id">{{prob.descriptionTypeProbleme}}</option>
+              </select>
+              
+              </div>
             </div>
           </form>
     </div>
