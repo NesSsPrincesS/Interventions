@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProblemeComponent } from './probleme.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, AbstractControl } from '@angular/forms';
+import { ZonesValidator } from '../shared/validerZones/longueur-minimum.component';
 
 describe('ProblemeComponent', () => {
   let component: ProblemeComponent;
@@ -38,33 +39,37 @@ describe('ProblemeComponent', () => {
     zone.setValue('a'.repeat(3));
     errors = zone.errors || {};
     expect(errors['minlength']).toBeFalsy();
-  })
+  });
   it('champ prenom valide avec 200 caractères',()=>{
     let errors = {};
     let zone = component.problemeForm.controls['prenom'];
     zone.setValue('a'.repeat(200));
     errors = zone.errors || {};
     expect(errors['minlength']).toBeFalsy();
-  })
+  });
   it('champ prenom invalide avec aucun caractère',()=>{
     let errors = {};
     let zone = component.problemeForm.controls['prenom'];
     zone.setValue('a'.repeat(0));
     errors = zone.errors || {};
     expect(errors['required']).toBeTruthy();
-  })
-  it('champ prenom valide avec 10 espaces',()=>{
-    let errors = {};
-    let zone = component.problemeForm.controls['prenom'];
-    zone.setValue(' '.repeat(10));
-    errors = zone.errors || {};
-    expect(errors['minlength']).toBeFalsy();
-  })
-  it('champ prenom valide avec 2 espaces et 1 caractère',()=>{
-    let errors = {};
-    let zone = component.problemeForm.controls['prenom'];
-    zone.setValue(' '.repeat(2) + 'a'.repeat(1));
-    errors = zone.errors || {};
-    expect(errors['minlength']).toBeFalsy();
-  })
+  });
+  it('champ prenom invalide avec 10 espaces', () =>{
+    //Préparer variable pour manipuler le validateur
+    let validator = ZonesValidator.longueurMinimum(3);
+    let control = {value: "          "};
+    //faire l'appel du validateur
+    let result= validator(control as AbstractControl);
+    //Comparer le résultat OBTENU avec le résultat PRÉVU
+    expect(result['nbreCaracteresInsuffisants']).toBe(true);
+  });
+  it('champ prenom invalide avec 2 espaces et 1 caractère', () =>{
+    //Préparer variable pour manipuler le validateur
+   let validator = ZonesValidator.longueurMinimum(3);
+   let control = {value: "  x"};
+   //faire l'appel du validateur
+   let result= validator(control as AbstractControl);
+    //Comparer le résultat OBTENU avec le résultat PRÉVU
+   expect(result['nbreCaracteresInsuffisants']).toBe(true);
+  });
 });
