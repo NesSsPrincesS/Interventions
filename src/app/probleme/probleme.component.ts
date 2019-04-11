@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { ZonesValidator } from '../shared/validerZones/longueur-minimum.component';
+import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
 import { TypeProblemeService } from './type-probleme.service';
 import { ITypeProbleme } from './typeprobleme';
 
@@ -56,15 +57,16 @@ export class ProblemeComponent implements OnInit {
       notifierTelephoneControl.setValidators([Validators.required]);
     }else if(notifier == "courrielGroup"){
       notifierCourrielControl.enable();
-      notifierCourrielControl.setValidators([Validators.required]);
+      notifierCourrielControl.setValidators([Validators.required, Validators.pattern('a-z0-9._%+-]+@[a-z0-9.-]+')]);
       notifierCourrielConfControl.enable();
-      notifierCourrielConfControl.setValidators([Validators.required]);
-      //notifierCourrielControl.setValidators([Validators.compose([courrielsValide])])
+      notifierCourrielConfControl.setValidators([Validators.required, Validators.pattern('a-z0-9._%+-]+@[a-z0-9.-]+')]);
+      notifierCourrielGroupControl.setValidators([emailMatcherValidator.courrielsValide()]);
     }
 
     notifierTelephoneControl.updateValueAndValidity();
     notifierCourrielControl.updateValueAndValidity();
     notifierCourrielConfControl.updateValueAndValidity();
+    notifierCourrielControl.updateValueAndValidity();
   }
 
 }
