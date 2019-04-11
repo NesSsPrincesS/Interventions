@@ -54,7 +54,7 @@ export class ProblemeComponent implements OnInit {
 
     if(notifier == "telephone"){
       notifierTelephoneControl.enable();
-      notifierTelephoneControl.setValidators([Validators.required]);
+      notifierTelephoneControl.setValidators([Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(10),  Validators.maxLength(10)]);
     }else if(notifier == "courrielGroup"){
       notifierCourrielControl.enable();
       notifierCourrielControl.setValidators([Validators.required, Validators.pattern('a-z0-9._%+-]+@[a-z0-9.-]+')]);
