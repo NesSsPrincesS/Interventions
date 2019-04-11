@@ -73,6 +73,5 @@ describe('longueur zone Validator',() =>{
         let result= validator(control as AbstractControl);
         //Comparer le résultat OBTENU avec le résultat PRÉVU
         expect(result['nbreCaracteresInsuffisants']).toBe(true);
-    }); 
-
+    });
 });

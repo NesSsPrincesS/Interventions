@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProblemeComponent } from './probleme.component';
 import { ReactiveFormsModule, AbstractControl } from '@angular/forms';
 import { ZonesValidator } from '../shared/validerZones/longueur-minimum.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TypeProblemeService } from './type-probleme.service';
 
 describe('ProblemeComponent', () => {
   let component: ProblemeComponent;
@@ -10,8 +12,9 @@ describe('ProblemeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [ ProblemeComponent ]
+      imports: [ReactiveFormsModule, HttpClientModule],
+      declarations: [ ProblemeComponent ],
+      providers: [TypeProblemeService]
     })
     .compileComponents();
   }));
@@ -26,13 +29,6 @@ describe('ProblemeComponent', () => {
   //   expect(component).toBeTruthy();
   // });
 
-  it('champ prenom invalide avec 2 caractères',()=>{
-    let errors = {};
-    let zone = component.problemeForm.controls['prenom'];
-    zone.setValue('a'.repeat(2));
-    errors = zone.errors || {};
-    expect(errors['minlength']).toBeTruthy();
-  });
   it('champ prenom valide avec 3 caractères',()=>{
     let errors = {};
     let zone = component.problemeForm.controls['prenom'];
@@ -71,5 +67,33 @@ describe('ProblemeComponent', () => {
    let result= validator(control as AbstractControl);
     //Comparer le résultat OBTENU avec le résultat PRÉVU
    expect(result['nbreCaracteresInsuffisants']).toBe(true);
+  });
+  
+  it('should be created', () => {
+    const service: TypeProblemeService = TestBed.get(TypeProblemeService);
+    expect(service).toBeTruthy();
+  });
+  it('Zone telephone desactivé quand ne pas me notifier',() =>{
+    component.appliquerNotifications('non');
+    let zone = component.problemeForm.get('telephone');
+    expect(zone.status).toEqual('DISABLED');
+  });
+  it('Zone telephone est invalide sans valeur si notifierParTelephone',() =>{
+    component.appliquerNotifications('telephone');
+    let errors ={};
+    let zone = component.problemeForm.get('telephone');
+    zone.setValue('');
+    errors = zone.errors || {};
+    expect(errors['required']).toBeTruthy();
+  });
+  it(' Zone courriel est desactivé ne pas me notifier',() =>{
+    component.appliquerNotifications('non');
+    let zone = component.problemeForm.get('courrielGroup.courriel');
+    expect(zone.status).toEqual('DISABLED');
+  });
+  it(' Zone courriel confirmation est desactivé ne pas me notifier',() =>{
+    component.appliquerNotifications('non');
+    let zone = component.problemeForm.get('courrielGroup.courrielConfirmation');
+    expect(zone.status).toEqual('DISABLED');
   });
 });
