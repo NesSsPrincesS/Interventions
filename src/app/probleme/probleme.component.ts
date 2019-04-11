@@ -31,6 +31,8 @@ export class ProblemeComponent implements OnInit {
     this.probleme.obtenirProbleme()
     .subscribe(cat => this.typeProbleme = cat,
                error => this.errorMessage = <any>error);
+    this.problemeForm.get('notifier').valueChanges
+    .subscribe(value => this.appliquerNotifications(value));
   }
 
   appliquerNotifications(notifier: String): void {
@@ -52,10 +54,10 @@ export class ProblemeComponent implements OnInit {
     notifierCourrielConfControl.reset();
     notifierCourrielConfControl.disable();
 
-    if(notifier == "telephone"){
+    if(notifier === 'telephone'){
       notifierTelephoneControl.enable();
       notifierTelephoneControl.setValidators([Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(10),  Validators.maxLength(10)]);
-    }else if(notifier == "courrielGroup"){
+    }else if(notifier === 'courrielGroup'){
       notifierCourrielControl.enable();
       notifierCourrielControl.setValidators([Validators.required, Validators.pattern('a-z0-9._%+-]+@[a-z0-9.-]+')]);
       notifierCourrielConfControl.enable();
