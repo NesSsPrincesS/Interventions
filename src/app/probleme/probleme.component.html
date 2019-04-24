@@ -171,10 +171,10 @@ Merci d'entrer votre adresse électronique.
 </small>
 </span>
 <span *ngIf="problemeForm.get('courrielGroup.courriel').errors?.pattern">
-<small class="text-muted">
-S.V.P. entrer les informations dans un format valide.
-</small>
-</span>
+  <small class="text-muted">
+  S.V.P. entrer les informations dans un format valide.
+  </small>
+  </span>
 </span>
 </div>
 </div>
@@ -199,6 +199,7 @@ S.V.P. entrer les informations dans un format valide.
   problemeForm.get('courrielGroup.courrielConfirmation').dirty) &&
   (problemeForm.get('courrielGroup.courrielConfirmation').errors ||
   problemeForm.get('courrielGroup').errors)">
+  
   <span *ngIf="problemeForm.get('courrielGroup.courrielConfirmation').errors?.required">
   <small class="text-muted">
   Confirmez votre adresse courriel (la réécrire)

@@ -59,9 +59,8 @@ export class ProblemeComponent implements OnInit {
       notifierTelephoneControl.setValidators([Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(10),  Validators.maxLength(10)]);
     }else if(notifier === 'courrielGroup'){
       notifierCourrielControl.enable();
-      notifierCourrielControl.setValidators([Validators.required, Validators.pattern('a-z0-9._%+-]+@[a-z0-9.-]+')]);
+      notifierCourrielControl.setValidators([Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]);
       notifierCourrielConfControl.enable();
-      notifierCourrielConfControl.setValidators([Validators.required, Validators.pattern('a-z0-9._%+-]+@[a-z0-9.-]+')]);
       notifierCourrielGroupControl.setValidators([emailMatcherValidator.courrielsValide()]);
     }
 
