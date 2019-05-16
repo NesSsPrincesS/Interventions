@@ -4,6 +4,9 @@
   <h5 class="card-header text-white bg-secondary">Déclarer un problème</h5>
 
   <div class="card-body">
+      <div class="alert alert-info" role="alert" *ngIf="messageSauvegarde">
+          {{messageSauvegarde}}
+  </div>
     <h5 class="card-title">Veuillez renseigner les zones suivante et soumettre votre demande</h5>
     <div class="card-text">
         <form class="form-horizontal"

@@ -4,6 +4,8 @@ import { ZonesValidator } from '../shared/validerZones/longueur-minimum.componen
 import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
 import { TypeProblemeService } from './type-probleme.service';
 import { ITypeProbleme } from './typeprobleme';
+import { IProbleme } from './probleme';
+import { ProblemeService } from './probleme.service';
 
 @Component({
   selector: 'Inter-probleme',
@@ -14,7 +16,11 @@ export class ProblemeComponent implements OnInit {
   problemeForm: FormGroup;
   typeProbleme: ITypeProbleme[];
   errorMessage: string;
-  constructor(private fb: FormBuilder, private probleme: TypeProblemeService) { }
+
+  problemeI: IProbleme;
+  messageSauvegarde: string;
+
+  constructor(private fb: FormBuilder, private probleme: TypeProblemeService, private problemeService: ProblemeService) { }
 
   ngOnInit() {
     this.problemeForm = this.fb.group({
@@ -71,6 +77,26 @@ export class ProblemeComponent implements OnInit {
     notifierCourrielControl.updateValueAndValidity();
     notifierCourrielConfControl.updateValueAndValidity();
     notifierCourrielControl.updateValueAndValidity();
+  }
+
+  save(): void {
+    if (this.problemeForm.dirty && this.problemeForm.valid) {
+         this.problemeI = this.problemeForm.value;
+         // Affecter les valeurs qui proviennent du fg le plus interne.
+         this.problemeI.courriel =  this.problemeForm.get('courrielGroup.courriel').value;
+         this.problemeI.courrielConfirmation =  this.problemeForm.get('courrielGroup.courrielConfirmation').value;      
+        this.problemeI.dateProbleme = new Date();
+         this.problemeService.saveProbleme(this.problemeI)
+            .subscribe( // on s'abonne car on a un retour du serveur à un moment donné avec la callback fonction
+                () => this.onSaveComplete(),  // Fonction callback
+                (error: any) => this.errorMessage = <any>error
+            );
+    } 
+  }
+  
+  onSaveComplete(): void {
+    this.problemeForm.reset();  // Pour remettre Dirty à false.  Autrement le Route Guard va dire que le formulaire n'est pas sauvegardé
+    this.messageSauvegarde = 'Votre demande a bien été sauvegardée.  Nous vous remercions.';
   }
 
 }

@@ -1,25 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ITypeProbleme } from './typeprobleme';
+import { IProbleme } from './probleme';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class TypeProblemeService {
+export class ProblemeService {
 
-  private URLDonnees = 'https://interventionslb1.azurewebsites.net/api/Intervention';
+  private baseUrl  = 'https://interventionslb1.azurewebsites.net/api/Intervention';
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
-    obtenirProbleme(): Observable<ITypeProbleme[]>{
-      return this.http.get<ITypeProbleme[]>(this.URLDonnees).pipe(
-      tap(data => console.log('obtenirProbleme: ' + JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+  saveProbleme(probleme: IProbleme): Observable<IProbleme> {
+    return this.createProbleme(probleme);
   }
-
+  private createProbleme(probleme: IProbleme): Observable<IProbleme> {
+    probleme.Id = undefined;
+  return this._http.post<IProbleme>(this.baseUrl, probleme).pipe(
+      tap(data => console.log('createProbleme: ' + JSON.stringify(data))),
+      catchError(this.handleError)
+  );
+  }
   private handleError(err: HttpErrorResponse) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
